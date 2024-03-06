@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TesteApp</string>
+    <string-array name="installments">
+        <item>A vista</item>
+    </string-array>
+    <string-array name="payments">
+        <item>Credito</item>
+        <item>Debito</item>
+    </string-array>
+</resources>

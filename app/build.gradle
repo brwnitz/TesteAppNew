@@ -1,0 +1,55 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.example.testeapp'
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "com.example.testeapp"
+        minSdk 22
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    applicationVariants.all { variant ->
+        //LIO
+        buildConfigField "String", "LIO_CLIENT_ID_VALUE", "\"loIDeZOSihHEaDmutRHUPl3dxJzKIQTgHJ5yncMHqLUNf241vz\""
+        buildConfigField "String", "LIO_ACCESS_TOKEN_VALUE", "\"ZjpVpQiUNcO4BLUsnSmwqFCL8AExTqTEZ9kl9vm9lDAdnd3MOy\""
+
+        //CIELO ORDER
+        buildConfigField "String", "CIELO_ORDER_SKU", "\"01\""
+        buildConfigField "String", "CIELO_ORDER_NAME", "\"TRANSACAO_APP_PRODUTOS\""
+        buildConfigField "String", "CIELO_ORDER_REF", "\"APP_PRODUTOS\""
+        buildConfigField "String", "CIELO_ORDER_UNIT_OF_MEASURE", "\"UNIDADE\""
+    }
+}
+
+dependencies {
+
+    implementation ("androidx.appcompat:appcompat:1.5.1")
+    implementation ("com.google.android.material:material:1.7.0")
+    implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
+    testImplementation ("junit:junit:4.13.2")
+    testImplementation ("junit:junit:4.12")
+    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.0")
+
+    implementation "com.cielo.lio:order-manager:1.7.2"
+    implementation 'com.squareup.picasso:picasso:2.71828'
+}
