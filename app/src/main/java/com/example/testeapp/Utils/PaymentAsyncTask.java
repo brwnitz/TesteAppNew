@@ -5,6 +5,9 @@ import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 
+import com.example.testeapp.Models.PaymentModel;
+import com.example.testeapp.Presenters.MainActivityInterface;
+
 import cielo.orders.domain.Order;
 import cielo.sdk.order.OrderManager;
 import cielo.sdk.order.payment.PaymentCode;
@@ -18,14 +21,17 @@ public class PaymentAsyncTask extends AsyncTask<Void, Void, Void> {
     long totalPrice;
 PaymentCode paymentCode;
 OrderManager orderManager;
+String nsu, authCode;
 Context context;
+IPaymentAsyncTask mainInterface;
 PaymentAsyncTask listener;
-    public PaymentAsyncTask(LioUtil apiLio, int installments, PaymentCode paymentCode, Context context, long totalPrice) {
+    public PaymentAsyncTask(LioUtil apiLio, int installments, PaymentCode paymentCode, Context context, long totalPrice, IPaymentAsyncTask mainInterface) {
         this.apiLio = apiLio;
         this.totalPrice = totalPrice;
         this.installments = installments;
         this.paymentCode = paymentCode;
         this.context = context;
+        this.mainInterface = mainInterface;
     }
 
     @Override
@@ -44,6 +50,10 @@ PaymentAsyncTask listener;
                 public void onPayment(@NonNull Order order) {
                     order.markAsPaid();
                     apiLio.updateOrder(order);
+                    String nsu = order.getPayments().get(0).getCieloCode();
+                    String authCode = order.getPayments().get(0).getAuthCode();
+                    PaymentModel paymentModel = new PaymentModel(installments,paymentCode.toString(),totalPrice,nsu,authCode);
+                    mainInterface.sendRequest(paymentModel,context);
                 }
 
                 @Override

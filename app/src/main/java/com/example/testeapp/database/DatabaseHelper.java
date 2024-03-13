@@ -29,8 +29,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_IMAGE + " VARCHAR(100)," +
                 COLUMN_PRICE + " LONG" +
                 ");";
+        String queryReprocess = "CREATE TABLE IF NOT EXISTS table_reprocess(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "reprocess_auth VARCHAR(100)," +
+                "reprocess_installments INTEGER," +
+                "reprocess_nsu VARCHAR(100)," +
+                "reprocess_paycode VARCHAR(100)," +
+                "reprocess_price LONG)";
         try{
             db.execSQL(query);
+            db.execSQL(queryReprocess);
             Log.d("TABLE","TABLE CRIADA");
         }
         catch (Exception e){

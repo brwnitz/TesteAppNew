@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
     ArrayList<Product> product_list,cart_list;
     MainActivityPresenter presenter;
     TextView tvFinalPrice;
-    FloatingActionButton addButton, finishBuy;
+    FloatingActionButton addButton, finishBuy, reprocessGo;
     ProductAdapter productAdapter;
     Spinner spinnerPayment,spinnerInstallment;
     LioUtil lioApi;
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
         lioApi.InitSDK(getApplicationContext());
         setContentView(R.layout.activity_main);
         presenter = new MainActivityPresenter();
+        reprocessGo = findViewById(R.id.goReprocess);
         spinnerPayment = findViewById(R.id.payments);
         spinnerInstallment = findViewById(R.id.installments);
         ArrayAdapter<CharSequence> adapterPayment = ArrayAdapter.createFromResource(this,R.array.payments, android.R.layout.simple_spinner_item);
@@ -78,6 +79,14 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
             @Override
             public void onClick(View v) {
                 presenter.makePayment(cart_list,spinnerPayment.getItemAtPosition(0).toString(),spinnerInstallment.getItemAtPosition(0).toString(),MainActivity.this,lioApi);
+            }
+        });
+        reprocessGo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ViewReprocess.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
     }
